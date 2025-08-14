@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: watermaji_postgres
+    environment:
+      POSTGRES_DB: watermaji
+      POSTGRES_USER: watermaji_user
+      POSTGRES_PASSWORD: watermaji_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./apps/backend/db/init:/docker-entrypoint-initdb.d
+    networks:
+      - watermaji_network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: watermaji_mongodb
+    environment:
+      MONGO_INITDB_DATABASE: watermaji_logs
+      MONGO_INITDB_ROOT_USERNAME: watermaji_admin
+      MONGO_INITDB_ROOT_PASSWORD: watermaji_admin_password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - watermaji_network
+
+  # Redis Cache
+  redis:
+    image: redis:7.2-alpine
+    container_name: watermaji_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - watermaji_network
+
+  # pgAdmin (Optional - for database management)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: watermaji_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@watermaji.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - watermaji_network
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:
+
+networks:
+  watermaji_network:
+    driver: bridge
