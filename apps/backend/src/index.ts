@@ -10,7 +10,11 @@ import rateLimit from 'express-rate-limit';
 import passport from 'passport';
 
 // Load environment variables FIRST
-dotenv.config();
+if (process.env.NODE_ENV === 'production') {
+  dotenv.config({ path: '.env.production' });
+} else {
+  dotenv.config();
+}
 
 // Import configurations
 import { config } from './config';
