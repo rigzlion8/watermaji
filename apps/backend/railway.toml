@@ -8,4 +8,4 @@ healthcheckTimeout = 300
 restartPolicyType = "on_failure"
 
 # Backend service configuration
-# This service will run on port 3001
+# This service will use Railway's PORT environment variable

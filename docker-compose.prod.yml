@@ -49,11 +49,9 @@ services:
       context: ./apps/backend
       dockerfile: Dockerfile
     container_name: watermaji_backend_prod
-    ports:
-      - "3001:3001"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=postgresql://postgres:AmxMusfbUShLtUlzrebSKOyqBQHniyud@trolley.proxy.rlwy.net:48632/watermaji
+      - DATABASE_URL=postgresql://postgres:AmxMusfbUShLtUlzrebSKOyqBQHniyud@trolley.proxy.rlwy.net:48632/railway
       - MONGODB_URI=mongodb+srv://rigzadmin:2794HSZxT6VTZZe@cluster0.9em0pjh.mongodb.net/watermaji_logs?retryWrites=true&w=majority&appName=Cluster0
       - REDIS_URL=redis://default:rJgjhjeuzobGsAadDFCxAhwFYTSQGvqQ@interchange.proxy.rlwy.net:33730
       - REDIS_PASSWORD=rJgjhjeuzobGsAadDFCxAhwFYTSQGvqQ

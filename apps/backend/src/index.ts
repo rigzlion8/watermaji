@@ -22,6 +22,7 @@ import { configurePassport } from './config/passport';
 
 // Import routes
 import authRoutes from './routes/auth';
+import healthRoutes from './routes/health';
 
 const app = express();
 const server = createServer(app);
@@ -92,14 +93,7 @@ if (config.nodeEnv === 'development') {
 }
 
 // Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: config.nodeEnv
-  });
-});
+app.use('/health', healthRoutes);
 
 // API routes
 app.use('/api/auth', authRoutes);
