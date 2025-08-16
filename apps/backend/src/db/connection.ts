@@ -4,6 +4,11 @@ import { createClient } from 'redis';
 import { config } from '../config';
 
 // PostgreSQL connection
+console.log('🔍 Database Config Debug:');
+console.log('DATABASE_URL:', config.database.postgres.url);
+console.log('POSTGRES_HOST:', config.database.postgres.host);
+console.log('POSTGRES_PORT:', config.database.postgres.port);
+
 const sequelizeConfig = config.database.postgres.url 
   ? { url: config.database.postgres.url }
   : {
@@ -16,6 +21,8 @@ const sequelizeConfig = config.database.postgres.url
       logging: config.database.postgres.logging,
       pool: config.database.postgres.pool,
     };
+
+console.log('🔍 Final Sequelize Config:', JSON.stringify(sequelizeConfig, null, 2));
 
 export const sequelize = new Sequelize({
   ...sequelizeConfig,
@@ -37,14 +44,16 @@ export const connectMongoDB = async (): Promise<void> => {
 };
 
 // Redis connection
-export const redisClient = createClient({
-  socket: {
-    host: config.database.redis.host,
-    port: config.database.redis.port
-  },
-  password: config.database.redis.password,
-  database: config.database.redis.db
-});
+export const redisClient = createClient(
+  config.database.redis.url ? { url: config.database.redis.url } : {
+    socket: {
+      host: config.database.redis.host,
+      port: config.database.redis.port
+    },
+    password: config.database.redis.password,
+    database: config.database.redis.db
+  }
+);
 
 export const connectRedis = async (): Promise<void> => {
   try {

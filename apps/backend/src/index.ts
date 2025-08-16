@@ -9,6 +9,9 @@ import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 import passport from 'passport';
 
+// Load environment variables FIRST
+dotenv.config();
+
 // Import configurations
 import { config } from './config';
 import { connectDatabase } from './db/connection';
@@ -19,9 +22,6 @@ import { configurePassport } from './config/passport';
 
 // Import routes
 import authRoutes from './routes/auth';
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const server = createServer(app);
