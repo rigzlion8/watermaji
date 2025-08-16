@@ -17,11 +17,8 @@ RUN npm run build
 # Remove dev dependencies
 RUN npm prune --omit=dev
 
-# Make the start script executable
-RUN chmod +x railway-start.sh
-
 # Expose port (Railway will provide PORT env var)
 EXPOSE ${PORT:-3000}
 
-# Start the application using our custom script
-CMD ["./railway-start.sh"]
+# Start the application using our custom server directly
+CMD ["npm", "start"]
