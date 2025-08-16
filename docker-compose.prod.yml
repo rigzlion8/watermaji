@@ -58,8 +58,9 @@ services:
       - POSTGRES_DB=railway
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=AmxMusfbUShLtUlzrebSKOyqBQHniyud
-      - MONGODB_URI=mongodb://mongodb:27017/watermaji_logs
-      - REDIS_HOST=redis
+      - MONGODB_URI=mongodb+srv://rigzadmin:2794HSZxT6VTZZe@cluster0.9em0pjh.mongodb.net/watermaji_logs?retryWrites=true&w=majority&appName=Cluster0
+      - REDIS_HOST=redis://default:rJgjhjeuzobGsAadDFCxAhwFYTSQGvqQ@interchange.proxy.rlwy.net:33730
+      - REDIS_PASSWORD=rJgjhjeuzobGsAadDFCxAhwFYTSQGvqQ
       - CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003,http://localhost:3004,http://localhost:3005,http://frontend:3000,http://host.docker.internal:3000
       - JWT_SECRET=746971f560a53d639db8b3985b2bb295
       - JWT_ACCESS_TOKEN_EXPIRY=15m
@@ -67,7 +68,7 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
-      - FRONTEND_URL=http://localhost:3000
+      - FRONTEND_URL=watermajifrontend-production.up.railway.app
     depends_on:
       - postgres
       - mongodb

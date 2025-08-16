@@ -1,0 +1,12 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "echo 'Please set Root Directory to apps/backend or apps/frontend'"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+
+# This file tells Railway this is a monorepo
+# You need to create separate services for backend and frontend
+# and set the Root Directory for each service
