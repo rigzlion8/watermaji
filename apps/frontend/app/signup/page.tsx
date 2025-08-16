@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import apiClient from '../../lib/api';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -46,30 +47,43 @@ export default function SignUpPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password
-        }),
+      // Step 1: Register the user
+      const registerResponse = await apiClient.register({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
       });
 
-      const data = await response.json();
+      if (registerResponse.success) {
+        // Step 2: Automatically log the user in
+        try {
+          const loginResponse = await apiClient.login({
+            email: formData.email,
+            password: formData.password
+          });
 
-      if (data.success) {
-        // Registration successful, redirect to signin
-        router.push('/signin?message=Registration successful! Please sign in.');
+          if (loginResponse.success && loginResponse.data?.accessToken) {
+            // Store the access token
+            localStorage.setItem('accessToken', loginResponse.data.accessToken);
+            
+            // Redirect to dashboard immediately
+            router.push('/dashboard');
+          } else {
+            throw new Error('Auto-login failed');
+          }
+        } catch (loginErr) {
+          console.error('Auto-login failed:', loginErr);
+          // If auto-login fails, redirect to signin with success message
+          router.push('/signin?message=Registration successful! Please sign in with your new credentials.');
+        }
       } else {
-        setError(data.message || 'Registration failed');
+        setError(registerResponse.message || 'Registration failed');
       }
-    } catch (err) {
-      setError('Network error. Please try again.');
+    } catch (err: any) {
+      console.error('Registration error:', err);
+      setError(err.message || 'Network error. Please try again.');
     } finally {
       setIsLoading(false);
     }

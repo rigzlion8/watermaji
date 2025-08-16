@@ -4,7 +4,7 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
-    container_name: watermaji_postgres_prod
+    container_name: watermaji_postgres_dev
     environment:
       POSTGRES_DB: watermaji
       POSTGRES_USER: watermaji_user
@@ -20,7 +20,7 @@ services:
   # MongoDB Database
   mongodb:
     image: mongo:7.0
-    container_name: watermaji_mongodb_prod
+    container_name: watermaji_mongodb_dev
     environment:
       MONGO_INITDB_DATABASE: watermaji_logs
       MONGO_INITDB_ROOT_USERNAME: watermaji_admin
@@ -35,7 +35,7 @@ services:
   # Redis Cache
   redis:
     image: redis:7.2-alpine
-    container_name: watermaji_redis_prod
+    container_name: watermaji_redis_dev
     ports:
       - "6379:6379"
     volumes:
@@ -48,11 +48,12 @@ services:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile
-    container_name: watermaji_backend_prod
+    container_name: watermaji_backend_dev
     ports:
       - "3001:3001"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
+      - PORT=3001
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_DB=watermaji
@@ -64,10 +65,6 @@ services:
       - JWT_SECRET=746971f560a53d639db8b3985b2bb295
       - JWT_ACCESS_TOKEN_EXPIRY=15m
       - JWT_REFRESH_TOKEN_EXPIRY=7d
-      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-      - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
-      - FRONTEND_URL=http://localhost:3000
     depends_on:
       - postgres
       - mongodb
@@ -75,28 +72,32 @@ services:
     networks:
       - watermaji_network
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # Frontend Dashboard
   frontend:
     build:
       context: ./apps/frontend
       dockerfile: Dockerfile
-    container_name: watermaji_frontend_prod
+    container_name: watermaji_frontend_dev
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - NEXT_PUBLIC_API_URL=http://localhost:3001
     depends_on:
       - backend
     networks:
       - watermaji_network
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # pgAdmin (Optional - for database management)
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: watermaji_pgadmin_prod
+    container_name: watermaji_pgadmin_dev
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@watermaji.com
       PGADMIN_DEFAULT_PASSWORD: admin_password

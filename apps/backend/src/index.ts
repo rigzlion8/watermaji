@@ -65,21 +65,21 @@ app.use(cors({
   origin: config.cors.origin,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma']
 }));
 
-// Session middleware
-app.use(require('express-session')({
-  secret: config.session.secret,
-  resave: config.session.resave,
-  saveUninitialized: config.session.saveUninitialized,
-  cookie: config.session.cookie
-}));
+// Session middleware - temporarily disabled for debugging
+// app.use(require('express-session')({
+//   secret: config.session.secret,
+//   resave: config.session.resave,
+//   saveUninitialized: config.session.saveUninitialized,
+//   cookie: config.session.cookie
+// }));
 
-// Initialize Passport
-configurePassport();
-app.use(passport.initialize());
-app.use(passport.session());
+// Initialize Passport - temporarily disabled for debugging
+// configurePassport();
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // Compression middleware
 app.use(compression());

@@ -57,11 +57,14 @@ export const connectDatabase = async (): Promise<void> => {
     await sequelize.authenticate();
     console.log('✅ PostgreSQL connected successfully');
     
-    // Sync models (in development)
-    if (config.nodeEnv === 'development') {
-      await sequelize.sync({ alter: true });
-      console.log('🔄 Database models synchronized');
-    }
+    // Import initialization functions
+    const { initializeDatabase, checkDatabaseSchema } = await import('./init');
+    
+    // Initialize database tables (both development and production)
+    await initializeDatabase();
+    
+    // Check database schema
+    await checkDatabaseSchema();
     
     // Connect to MongoDB
     await connectMongoDB();

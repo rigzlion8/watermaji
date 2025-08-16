@@ -3,6 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import apiClient from '../../lib/api';
 
 function SignInContent() {
   const router = useRouter();
@@ -32,29 +33,22 @@ function SignInContent() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3001/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        }),
+      const response = await apiClient.login({
+        email: formData.email,
+        password: formData.password
       });
 
-      const data = await response.json();
-
-      if (data.success) {
+      if (response.success && response.data?.accessToken) {
         // Store the access token
-        localStorage.setItem('accessToken', data.data.tokens.accessToken);
+        localStorage.setItem('accessToken', response.data.accessToken);
         // Redirect to dashboard
         router.push('/dashboard');
       } else {
-        setError(data.message || 'Login failed');
+        setError(response.message || 'Login failed');
       }
-    } catch (err) {
-      setError('Network error. Please try again.');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setError(err.message || 'Network error. Please try again.');
     } finally {
       setIsLoading(false);
     }

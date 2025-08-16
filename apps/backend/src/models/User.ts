@@ -93,7 +93,14 @@ export default class User extends Model {
     type: DataType.BOOLEAN,
     defaultValue: true
   })
-  isActive!: boolean;
+  get isActive(): boolean {
+    const value = this.getDataValue('isActive');
+    return value === true || value === 'true' || value === 1;
+  }
+  
+  set isActive(value: boolean) {
+    this.setDataValue('isActive', value);
+  }
 
   @Column({
     type: DataType.DATE,

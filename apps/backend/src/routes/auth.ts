@@ -198,6 +198,13 @@ router.get('/profile', authMiddleware, async (req: Request, res: Response): Prom
       return;
     }
 
+    // Set cache control headers to prevent caching
+    res.set({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
+    
     res.json({
       success: true,
       data: {

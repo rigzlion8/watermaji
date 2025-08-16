@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import apiClient from '../../lib/api';
 
 interface User {
   id: string;
@@ -35,19 +36,17 @@ export default function DashboardPage() {
         return;
       }
 
-      const response = await fetch('http://localhost:3001/auth/profile', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await apiClient.getProfile();
 
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.data.user);
+      if (response.success && response.data?.user) {
+        console.log('🔍 Debug: Profile response data:', response);
+        console.log('🔍 Debug: User data:', response.data.user);
+        console.log('🔍 Debug: User firstName:', response.data.user.firstName);
+        console.log('🔍 Debug: User lastName:', response.data.user.lastName);
+        console.log('🔍 Debug: User email:', response.data.user.email);
+        setUser(response.data.user);
       } else {
-        localStorage.removeItem('accessToken');
-        router.push('/signin');
+        throw new Error('Invalid user data structure');
       }
     } catch (error) {
       console.error('Auth check failed:', error);
@@ -60,16 +59,7 @@ export default function DashboardPage() {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
-      if (token) {
-        await fetch('http://localhost:3001/auth/logout', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-      }
+      await apiClient.logout();
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -115,13 +105,13 @@ export default function DashboardPage() {
                   />
                 ) : (
                   <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">
-                      {user.firstName.charAt(0)}{user.lastName.charAt(0)}
-                    </span>
+                                    <span className="text-white font-bold text-sm">
+                  {(user.firstName || 'U').charAt(0)}{(user.lastName || '').charAt(0)}
+                </span>
                   </div>
                 )}
                 <span className="text-sm font-medium text-gray-700">
-                  {user.firstName} {user.lastName}
+                  {user.firstName || 'User'} {user.lastName || ''}
                 </span>
               </div>
               <button
@@ -140,7 +130,7 @@ export default function DashboardPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="mt-2 text-gray-600">
-            Welcome back, {user.firstName}! Here's what's happening with your water delivery.
+            Welcome back, {user.firstName || 'User'}! Here's what's happening with your water delivery.
           </p>
         </div>
 
@@ -261,7 +251,7 @@ export default function DashboardPage() {
                     </label>
                     <input
                       type="text"
-                      value={user.firstName}
+                      value={user.firstName || 'Not provided'}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       readOnly
                     />
@@ -272,7 +262,7 @@ export default function DashboardPage() {
                     </label>
                     <input
                       type="text"
-                      value={user.lastName}
+                      value={user.lastName || 'Not provided'}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       readOnly
                     />
@@ -283,7 +273,7 @@ export default function DashboardPage() {
                     </label>
                     <input
                       type="email"
-                      value={user.email}
+                      value={user.email || 'Not provided'}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       readOnly
                     />

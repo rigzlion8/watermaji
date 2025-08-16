@@ -55,6 +55,7 @@ export class AuthService {
       passwordHash,
       authProvider: AuthProvider.LOCAL,
       emailVerified: false,
+      isActive: true,
       role: UserRole.CUSTOMER
     });
 
@@ -74,7 +75,14 @@ export class AuthService {
     }
 
     // Check if user is active
-    if (!user.isActive) {
+    console.log('🔍 Debug: user.isActive value:', user.isActive, 'type:', typeof user.isActive);
+    console.log('🔍 Debug: user.isActive raw value:', user.getDataValue('isActive'));
+    
+    // Temporarily bypass isActive check to test our fix
+    const isActiveValue = user.isActive;
+    console.log('🔍 Debug: Final isActive value after getter:', isActiveValue);
+    
+    if (!isActiveValue) {
       throw new Error('Account is deactivated');
     }
 
