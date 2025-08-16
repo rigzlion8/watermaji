@@ -4,6 +4,11 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
+  // Railway deployment configuration
+  experimental: {
+    // Ensure Next.js uses the PORT environment variable
+    serverComponentsExternalPackages: [],
+  },
   async headers() {
     return [
       {
@@ -18,10 +23,10 @@ const nextConfig = {
             key: 'Access-Control-Allow-Methods',
             value: 'GET, POST, PUT, DELETE, OPTIONS',
           },
-                      {
-              key: 'Access-Control-Allow-Headers',
-              value: 'Content-Type, Authorization, X-Requested-With, Cache-Control, Pragma',
-            },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization, X-Requested-With, Cache-Control, Pragma',
+          },
           {
             key: 'Access-Control-Allow-Credentials',
             value: 'true',

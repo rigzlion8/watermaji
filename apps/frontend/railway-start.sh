@@ -8,5 +8,7 @@ PORT=${PORT:-3000}
 
 echo "🚰 Starting Watermaji Frontend on port $PORT"
 
-# Start Next.js with the correct port
-exec npm start -- -p $PORT
+# Start Next.js with the custom server
+# The custom server will automatically use the PORT environment variable
+export PORT=$PORT
+exec npm start
