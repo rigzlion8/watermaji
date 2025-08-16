@@ -4,15 +4,21 @@ import { createClient } from 'redis';
 import { config } from '../config';
 
 // PostgreSQL connection
+const sequelizeConfig = config.database.postgres.url 
+  ? { url: config.database.postgres.url }
+  : {
+      host: config.database.postgres.host,
+      port: config.database.postgres.port,
+      database: config.database.postgres.database,
+      username: config.database.postgres.username,
+      password: config.database.postgres.password,
+      dialect: config.database.postgres.dialect,
+      logging: config.database.postgres.logging,
+      pool: config.database.postgres.pool,
+    };
+
 export const sequelize = new Sequelize({
-  host: config.database.postgres.host,
-  port: config.database.postgres.port,
-  database: config.database.postgres.database,
-  username: config.database.postgres.username,
-  password: config.database.postgres.password,
-  dialect: config.database.postgres.dialect,
-  logging: config.database.postgres.logging,
-  pool: config.database.postgres.pool,
+  ...sequelizeConfig,
   models: [__dirname + '/../models'], // Path to models
   modelMatch: (filename: string, member: string) => {
     return filename.substring(0, filename.indexOf('.model')).toLowerCase() === member.toLowerCase();

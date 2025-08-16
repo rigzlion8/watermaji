@@ -8,6 +8,8 @@ export const config = {
   
   database: {
     postgres: {
+      // Support both DATABASE_URL and individual components
+      url: process.env.DATABASE_URL,
       host: process.env.POSTGRES_HOST || 'localhost',
       port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
       database: process.env.POSTGRES_DB || 'watermaji',
