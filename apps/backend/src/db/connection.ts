@@ -15,9 +15,20 @@ console.log('DATABASE_URL:', config.database.postgres.url);
 console.log('POSTGRES_HOST:', config.database.postgres.host);
 console.log('POSTGRES_PORT:', config.database.postgres.port);
 
-const sequelizeConfig = config.database.postgres.url 
-  ? { url: config.database.postgres.url }
-  : {
+console.log('🔍 Using DATABASE_URL:', config.database.postgres.url ? 'YES' : 'NO');
+
+// Create Sequelize instance based on configuration type
+export const sequelize = config.database.postgres.url 
+  ? new Sequelize(config.database.postgres.url, {
+      dialect: 'postgres',
+      logging: config.database.postgres.logging,
+      pool: config.database.postgres.pool,
+      models: [__dirname + '/../models'],
+      modelMatch: (filename: string, member: string) => {
+        return filename.substring(0, filename.indexOf('.model')).toLowerCase() === member.toLowerCase();
+      }
+    })
+  : new Sequelize({
       host: config.database.postgres.host,
       port: config.database.postgres.port,
       database: config.database.postgres.database,
@@ -26,17 +37,11 @@ const sequelizeConfig = config.database.postgres.url
       dialect: config.database.postgres.dialect,
       logging: config.database.postgres.logging,
       pool: config.database.postgres.pool,
-    };
-
-console.log('🔍 Final Sequelize Config:', JSON.stringify(sequelizeConfig, null, 2));
-
-export const sequelize = new Sequelize({
-  ...sequelizeConfig,
-  models: [__dirname + '/../models'], // Path to models
-  modelMatch: (filename: string, member: string) => {
-    return filename.substring(0, filename.indexOf('.model')).toLowerCase() === member.toLowerCase();
-  }
-});
+      models: [__dirname + '/../models'],
+      modelMatch: (filename: string, member: string) => {
+        return filename.substring(0, filename.indexOf('.model')).toLowerCase() === member.toLowerCase();
+      }
+    });
 
 // MongoDB connection
 export const connectMongoDB = async (): Promise<void> => {
