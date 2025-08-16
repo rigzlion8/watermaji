@@ -55,11 +55,29 @@ export const connectMongoDB = async (): Promise<void> => {
 };
 
 // Redis connection
+console.log('🔍 Redis Config Debug:');
+console.log('🔍 Raw Redis Environment Variables:');
+console.log('REDIS_URL:', process.env.REDIS_URL);
+console.log('REDIS_HOST:', process.env.REDIS_HOST);
+console.log('REDIS_PORT:', process.env.REDIS_PORT);
+console.log('🔍 Processed Redis Config:');
+console.log('REDIS_URL:', config.database.redis.url);
+console.log('REDIS_HOST:', config.database.redis.host);
+console.log('REDIS_PORT:', config.database.redis.port);
+
 export const redisClient = createClient(
-  config.database.redis.url ? { url: config.database.redis.url } : {
+  config.database.redis.url ? { 
+    url: config.database.redis.url,
+    socket: {
+      connectTimeout: 10000,
+      timeout: 10000
+    }
+  } : {
     socket: {
       host: config.database.redis.host,
-      port: config.database.redis.port
+      port: config.database.redis.port,
+      connectTimeout: 10000,
+      timeout: 10000
     },
     password: config.database.redis.password,
     database: config.database.redis.db
@@ -68,10 +86,18 @@ export const redisClient = createClient(
 
 export const connectRedis = async (): Promise<void> => {
   try {
+    console.log('🔍 Attempting Redis connection...');
+    console.log('🔍 Redis client config:', config.database.redis.url ? 'Using URL' : 'Using components');
+    
     await redisClient.connect();
     console.log('✅ Redis connected successfully');
   } catch (error) {
     console.error('❌ Redis connection error:', error);
+    console.error('❌ Redis connection details:', {
+      url: config.database.redis.url,
+      host: config.database.redis.host,
+      port: config.database.redis.port
+    });
     throw error;
   }
 };
