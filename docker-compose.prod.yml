@@ -68,7 +68,7 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
-      - FRONTEND_URL=watermajifrontend-production.up.railway.app
+      - FRONTEND_URL=https://watermajifrontend-production.up.railway.app
     depends_on:
       - postgres
       - mongodb
@@ -87,7 +87,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - NEXT_PUBLIC_API_URL=https://watermajibackend-production.up.railway.app
     depends_on:
       - backend
     networks:
