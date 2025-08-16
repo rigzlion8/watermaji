@@ -53,11 +53,11 @@ services:
       - "3001:3001"
     environment:
       - NODE_ENV=production
-      - POSTGRES_HOST=postgres
+      - POSTGRES_HOST=postgresql://postgres:AmxMusfbUShLtUlzrebSKOyqBQHniyud@trolley.proxy.rlwy.net:48632/railway
       - POSTGRES_PORT=5432
-      - POSTGRES_DB=watermaji
-      - POSTGRES_USER=watermaji_user
-      - POSTGRES_PASSWORD=watermaji_password
+      - POSTGRES_DB=railway
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=AmxMusfbUShLtUlzrebSKOyqBQHniyud
       - MONGODB_URI=mongodb://mongodb:27017/watermaji_logs
       - REDIS_HOST=redis
       - CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003,http://localhost:3004,http://localhost:3005,http://frontend:3000,http://host.docker.internal:3000
