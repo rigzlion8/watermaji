@@ -16,6 +16,14 @@ if (process.env.NODE_ENV === 'production') {
   dotenv.config();
 }
 
+// Debug environment variables
+console.log('🔍 Environment Debug:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('PORT:', process.env.PORT);
+console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'SET' : 'NOT SET');
+console.log('REDIS_URL:', process.env.REDIS_URL ? 'SET' : 'NOT SET');
+console.log('MONGODB_URI:', process.env.MONGODB_URI ? 'SET' : 'NOT SET');
+
 // Import configurations
 import { config } from './config';
 import { connectDatabase } from './db/connection';
@@ -116,11 +124,13 @@ async function startServer() {
     await connectDatabase();
     
     // Start server
-    server.listen(config.port, () => {
-      console.log(`🚀 Watermaji Backend Server running on port ${config.port}`);
+    const port = parseInt(process.env.PORT || config.port.toString(), 10);
+    server.listen(port, '0.0.0.0', () => {
+      console.log(`🚀 Watermaji Backend Server running on port ${port}`);
       console.log(`📊 Environment: ${config.nodeEnv}`);
-      console.log(`🌐 Health check: http://localhost:${config.port}/health`);
-      console.log(`📚 API Documentation: http://localhost:${config.port}/api/docs`);
+      console.log(`🌐 Health check: http://0.0.0.0:${port}/health`);
+      console.log(`📚 API Documentation: http://0.0.0.0:${port}/api/docs`);
+      console.log(`🔌 Binding to: 0.0.0.0:${port}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
