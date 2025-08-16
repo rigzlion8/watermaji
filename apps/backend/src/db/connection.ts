@@ -5,6 +5,12 @@ import { config } from '../config';
 
 // PostgreSQL connection
 console.log('🔍 Database Config Debug:');
+console.log('🔍 Raw Environment Variables:');
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
+console.log('POSTGRES_HOST:', process.env.POSTGRES_HOST);
+console.log('POSTGRES_PORT:', process.env.POSTGRES_PORT);
+console.log('POSTGRES_DB:', process.env.POSTGRES_DB);
+console.log('🔍 Processed Config:');
 console.log('DATABASE_URL:', config.database.postgres.url);
 console.log('POSTGRES_HOST:', config.database.postgres.host);
 console.log('POSTGRES_PORT:', config.database.postgres.port);
