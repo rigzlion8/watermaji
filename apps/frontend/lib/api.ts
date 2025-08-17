@@ -1,7 +1,11 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api` : 'http://localhost:3001/api';
+// Use Railway backend URL in production, localhost in development
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://watermajibackend-production.up.railway.app/api'
+  : 'http://localhost:3001/api';
 
 // Debug logging
 console.log('🔍 Frontend API Configuration:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
 console.log('API_BASE_URL:', API_BASE_URL);
 
