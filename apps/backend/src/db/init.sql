@@ -36,7 +36,7 @@ CREATE TABLE user_addresses (
     address_line2 VARCHAR(255),
     city VARCHAR(100) NOT NULL,
     state VARCHAR(100) NOT NULL,
-    postal_code VARCHAR(20) NOT NULL,
+    postal_code VARCHAR(50) NOT NULL,
     country VARCHAR(100) NOT NULL DEFAULT 'Kenya',
     latitude DECIMAL(10, 8),
     longitude DECIMAL(11, 8),

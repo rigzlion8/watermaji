@@ -1,6 +1,6 @@
 // Use Railway backend URL in production, localhost in development
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://watermajibackend-production.up.railway.app/api'
+  ? (process.env.API_BASE_URL || 'https://watermajibackend-production.up.railway.app/api')
   : 'http://localhost:3001/api';
 
 // Debug logging
