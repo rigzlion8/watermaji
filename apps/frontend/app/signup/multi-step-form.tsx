@@ -22,7 +22,7 @@ interface StepProps {
   setSignupData: React.Dispatch<React.SetStateAction<SignupData>>;
 }
 
-const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalSteps }) => (
+const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalSteps, setSignupData }) => (
   <div className="space-y-6">
     <div className="text-center">
       <h2 className="text-2xl font-bold text-gray-900">What's your first name?</h2>
@@ -58,7 +58,7 @@ const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalS
   </div>
 );
 
-const Step2LastName: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps }) => (
+const Step2LastName: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps, setSignupData }) => (
   <div className="space-y-6">
     <div className="text-center">
       <h2 className="text-2xl font-bold text-gray-900">What's your last name?</h2>
@@ -102,7 +102,7 @@ const Step2LastName: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
   </div>
 );
 
-const Step3Email: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps }) => (
+const Step3Email: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps, setSignupData }) => (
   <div className="space-y-6">
     <div className="text-center">
       <h2 className="text-2xl font-bold text-gray-900">What's your email address?</h2>
@@ -146,7 +146,7 @@ const Step3Email: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
   </div>
 );
 
-const Step4Phone: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps }) => (
+const Step4Phone: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps, setSignupData }) => (
   <div className="space-y-6">
     <div className="text-center">
       <h2 className="text-2xl font-bold text-gray-900">What's your phone number?</h2>
@@ -190,7 +190,7 @@ const Step4Phone: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
   </div>
 );
 
-const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps }) => (
+const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps, setSignupData }) => (
   <div className="space-y-6">
     <div className="text-center">
       <h2 className="text-2xl font-bold text-gray-900">Create a secure password</h2>
@@ -234,7 +234,7 @@ const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
   </div>
 );
 
-const Step6Review: React.FC<StepProps> = ({ data, onBack, currentStep, totalSteps }) => {
+const Step6Review: React.FC<StepProps> = ({ data, onBack, currentStep, totalSteps, setSignupData }) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
