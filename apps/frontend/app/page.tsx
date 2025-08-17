@@ -1,7 +1,11 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 export default function LandingPage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       {/* Navigation */}
@@ -33,7 +37,10 @@ export default function LandingPage() {
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <button className="text-gray-600 hover:text-blue-600 transition-colors">
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-gray-600 hover:text-blue-600 transition-colors"
+              >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -49,14 +56,45 @@ export default function LandingPage() {
                 Sign In
               </Link>
               <Link 
-                href="/signup"
+                href="/signin"
                 className="inline-flex px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium rounded-full hover:from-blue-700 hover:to-cyan-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                Get Started
+                Sign In
               </Link>
             </div>
           </div>
         </div>
+        
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200">
+            <div className="px-4 py-6 space-y-4">
+              <a href="#features" className="block text-gray-600 hover:text-blue-600 transition-colors py-2">
+                Features
+              </a>
+              <a href="#how-it-works" className="block text-gray-600 hover:text-blue-600 transition-colors py-2">
+                How it Works
+              </a>
+              <a href="#pricing" className="block text-gray-600 hover:text-blue-600 transition-colors py-2">
+                Pricing
+              </a>
+              <div className="pt-4 border-t border-gray-200">
+                <Link 
+                  href="/signin"
+                  className="block text-blue-600 font-medium hover:text-blue-700 transition-colors py-2"
+                >
+                  Sign In
+                </Link>
+                <Link 
+                  href="/signup"
+                  className="block mt-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium rounded-full hover:from-blue-700 hover:to-cyan-700 transition-all duration-200 text-center"
+                >
+                  Sign Up for Free
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -80,13 +118,13 @@ export default function LandingPage() {
                 href="/signup"
                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:from-blue-700 hover:to-cyan-700 transform hover:scale-105 transition-all duration-200 shadow-xl hover:shadow-2xl text-lg"
               >
-                Start Your Subscription
+                Sign Up for Free
               </Link>
               <Link 
-                href="/demo"
+                href="/signin"
                 className="w-full sm:w-auto px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-full hover:border-blue-600 hover:text-blue-600 transition-all duration-200 text-lg"
               >
-                Watch Demo
+                Sign In
               </Link>
             </div>
 
