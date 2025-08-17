@@ -50,16 +50,10 @@ export default function LandingPage() {
             {/* Auth Buttons */}
             <div className="flex items-center space-x-4">
               <Link 
-                href="/signin"
-                className="hidden sm:inline-flex px-4 py-2 text-blue-600 font-medium hover:text-blue-700 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link 
-                href="/signin"
+                href="/signup"
                 className="inline-flex px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium rounded-full hover:from-blue-700 hover:to-cyan-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                Sign In
+                Sign Up for Free
               </Link>
             </div>
           </div>
@@ -113,18 +107,12 @@ export default function LandingPage() {
             </p>
             
             {/* CTA Buttons */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="mt-10 flex justify-center items-center">
               <Link 
                 href="/signup"
                 className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full hover:from-blue-700 hover:to-cyan-700 transform hover:scale-105 transition-all duration-200 shadow-xl hover:shadow-2xl text-lg"
               >
                 Sign Up for Free
-              </Link>
-              <Link 
-                href="/signin"
-                className="w-full sm:w-auto px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-full hover:border-blue-600 hover:text-blue-600 transition-all duration-200 text-lg"
-              >
-                Sign In
               </Link>
             </div>
 
