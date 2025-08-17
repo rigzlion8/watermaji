@@ -36,7 +36,7 @@ const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalS
         onChange={(e) => onNext('firstName', e.target.value)}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
-        onKeyPress={(e) => e.key === 'Enter' && data.firstName.trim() && onNext('firstName', data.firstName)}
+        onKeyDown={(e) => e.key === 'Enter' && data.firstName.trim() && onNext('firstName', data.firstName)}
       />
       
       <button
@@ -69,7 +69,7 @@ const Step2LastName: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
         onChange={(e) => onNext('lastName', e.target.value)}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
-        onKeyPress={(e) => e.key === 'Enter' && data.lastName.trim() && onNext('lastName', data.lastName)}
+        onKeyDown={(e) => e.key === 'Enter' && data.lastName.trim() && onNext('lastName', data.lastName)}
       />
       
       <div className="flex space-x-3">
@@ -110,7 +110,7 @@ const Step3Email: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
         onChange={(e) => onNext('email', e.target.value)}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
-        onKeyPress={(e) => e.key === 'Enter' && data.email.trim() && onNext('email', data.email)}
+        onKeyDown={(e) => e.key === 'Enter' && data.email.trim() && onNext('email', data.email)}
       />
       
       <div className="flex space-x-3">
@@ -151,7 +151,7 @@ const Step4Phone: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
         onChange={(e) => onNext('phone', e.target.value)}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
-        onKeyPress={(e) => e.key === 'Enter' && data.phone.trim() && onNext('phone', data.phone)}
+        onKeyDown={(e) => e.key === 'Enter' && data.phone.trim() && onNext('phone', data.phone)}
       />
       
       <div className="flex space-x-3">
@@ -192,7 +192,7 @@ const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
         onChange={(e) => onNext('password', e.target.value)}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
-        onKeyPress={(e) => e.key === 'Enter' && data.password.trim() && onNext('password', data.password)}
+        onKeyDown={(e) => e.key === 'Enter' && data.password.trim() && onNext('password', data.password)}
       />
       
       <div className="flex space-x-3">
