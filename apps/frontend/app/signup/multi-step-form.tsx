@@ -190,40 +190,91 @@ const Step4Phone: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
   </div>
 );
 
-const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps, setSignupData }) => (
-  <div className="space-y-6">
-    <div className="text-center">
-      <h2 className="text-2xl font-bold text-gray-900">Create a secure password</h2>
-      <p className="mt-2 text-gray-600">Choose a strong password to protect your account</p>
-    </div>
-    
-    <div className="space-y-4">
-      <input
-        type="password"
-        placeholder="Enter your password"
-        value={data.password}
-        onChange={(e) => {
-          const newData = { ...data, password: e.target.value };
-          setSignupData(newData);
-        }}
-        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
-        autoFocus
-        onKeyDown={(e) => e.key === 'Enter' && data.password.trim() && onNext('password', data.password)}
-      />
+const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, totalSteps, setSignupData }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  
+  // Password validation rules
+  const passwordRequirements = [
+    { 
+      rule: 'At least 8 characters long', 
+      met: data.password.length >= 8,
+      icon: data.password.length >= 8 ? '✅' : '❌'
+    },
+    { 
+      rule: 'Contains at least one letter', 
+      met: /[a-zA-Z]/.test(data.password),
+      icon: /[a-zA-Z]/.test(data.password) ? '✅' : '❌'
+    },
+    { 
+      rule: 'Contains at least one number', 
+      met: /\d/.test(data.password),
+      icon: /\d/.test(data.password) ? '✅' : '❌'
+    },
+    { 
+      rule: 'Contains at least one special character', 
+      met: /[!@#$%^&*(),.?":{}|<>]/.test(data.password),
+      icon: /[!@#$%^&*(),.?":{}|<>]/.test(data.password) ? '✅' : '❌'
+    }
+  ];
+  
+  const allRequirementsMet = passwordRequirements.every(req => req.met);
+  
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-gray-900">Create a secure password</h2>
+        <p className="mt-2 text-gray-600">Choose a strong password to protect your account</p>
+      </div>
       
-      <div className="flex space-x-3">
-        <button
-          onClick={onBack}
-          className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-300 transition-colors"
-        >
-          Back
-        </button>
-        <button
-          onClick={() => data.password.trim() && onNext('password', data.password)}
-          disabled={!data.password.trim()}
-          className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          Next
+      <div className="space-y-4">
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            value={data.password}
+            onChange={(e) => {
+              const newData = { ...data, password: e.target.value };
+              setSignupData(newData);
+            }}
+            className="w-full px-4 py-3 sm:py-4 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base sm:text-lg"
+            autoFocus
+            onKeyDown={(e) => e.key === 'Enter' && allRequirementsMet && onNext('password', data.password)}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+          >
+            {showPassword ? '👁️' : '👁️‍🗨️'}
+          </button>
+        </div>
+        
+        {/* Password Requirements */}
+        <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+          <h4 className="text-sm font-medium text-gray-700 mb-3">Password Requirements:</h4>
+          {passwordRequirements.map((requirement, index) => (
+            <div key={index} className="flex items-center space-x-2">
+              <span className="text-sm">{requirement.icon}</span>
+              <span className={`text-sm ${requirement.met ? 'text-green-600' : 'text-gray-500'}`}>
+                {requirement.rule}
+              </span>
+            </div>
+          ))}
+        </div>
+        
+        <div className="flex space-x-3">
+          <button
+            onClick={onBack}
+            className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+          >
+            Back
+          </button>
+          <button
+            onClick={() => allRequirementsMet && onNext('password', data.password)}
+            disabled={!allRequirementsMet}
+            className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Next
         </button>
       </div>
     </div>
@@ -232,7 +283,8 @@ const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
       Step {currentStep} of {totalSteps}
     </div>
   </div>
-);
+  );
+};
 
 const Step6Review: React.FC<StepProps> = ({ data, onBack, currentStep, totalSteps, setSignupData }) => {
   const router = useRouter();
