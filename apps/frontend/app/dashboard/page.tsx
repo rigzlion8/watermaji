@@ -85,7 +85,7 @@ export default function DashboardPage() {
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-14 sm:h-16">
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center">
@@ -125,18 +125,18 @@ export default function DashboardPage() {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="mt-2 text-gray-600">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
+          <p className="mt-2 text-sm sm:text-base text-gray-600">
             Welcome back, {user.firstName || 'User'}! Here's what's happening with your water delivery.
           </p>
         </div>
 
         {/* Tab Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
+        <div className="border-b border-gray-200 mb-6 sm:mb-8">
+          <nav className="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto">
             {[
               { id: 'overview', name: 'Overview', icon: '📊' },
               { id: 'orders', name: 'Orders', icon: '📦' },
@@ -146,13 +146,13 @@ export default function DashboardPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-2 sm:px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                <span className="mr-2">{tab.icon}</span>
+                <span className="mr-1 sm:mr-2">{tab.icon}</span>
                 {tab.name}
               </button>
             ))}
@@ -160,9 +160,9 @@ export default function DashboardPage() {
         </div>
 
         {/* Tab Content */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {activeTab === 'overview' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {/* Quick Stats */}
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center">

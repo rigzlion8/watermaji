@@ -38,7 +38,7 @@ const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalS
           const newData = { ...data, firstName: e.target.value };
           setSignupData(newData);
         }}
-        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
+        className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base sm:text-lg"
         autoFocus
         onKeyDown={(e) => e.key === 'Enter' && data.firstName.trim() && onNext('firstName', data.firstName)}
       />
@@ -46,7 +46,7 @@ const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalS
       <button
         onClick={() => data.firstName.trim() && onNext('firstName', data.firstName)}
         disabled={!data.firstName.trim()}
-        className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-blue-600 text-white py-3 sm:py-4 px-6 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base sm:text-lg"
       >
         Next
       </button>
@@ -361,8 +361,8 @@ const MultiStepSignupForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <div className="mx-auto h-12 w-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-xl">W</span>
@@ -370,14 +370,14 @@ const MultiStepSignupForm: React.FC = () => {
           <h1 className="mt-6 text-3xl font-bold text-gray-900">Create Account</h1>
           
           {/* Progress Bar */}
-          <div className="mt-6">
+          <div className="mt-4 sm:mt-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-gray-700">Step {currentStep} of {totalSteps}</span>
-              <span className="text-sm text-gray-500">{Math.round((currentStep / totalSteps) * 100)}%</span>
+              <span className="text-xs sm:text-sm font-medium text-gray-700">Step {currentStep} of {totalSteps}</span>
+              <span className="text-xs sm:text-sm text-gray-500">{Math.round((currentStep / totalSteps) * 100)}%</span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
+            <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3">
               <div 
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 h-2 rounded-full transition-all duration-300 ease-in-out"
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 h-2 sm:h-3 rounded-full transition-all duration-300 ease-in-out"
                 style={{ width: `${(currentStep / totalSteps) * 100}%` }}
               ></div>
             </div>
