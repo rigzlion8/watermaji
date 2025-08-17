@@ -58,7 +58,8 @@ export const config = {
       'http://localhost:3004', 
       'http://localhost:3005',
       'http://frontend:3000',  // Docker service name
-      'http://localhost:3000'  // Host machine access
+      'http://localhost:3000',  // Host machine access
+      'https://watermajifrontend-production.up.railway.app'  // Railway frontend
     ],
     credentials: true
   },
