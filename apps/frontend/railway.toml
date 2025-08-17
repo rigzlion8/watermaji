@@ -11,6 +11,7 @@ restartPolicyType = "on_failure"
 # This service will use Railway's PORT environment variable
 
 [variables]
+NODE_ENV = "production"
 NEXT_PUBLIC_API_URL = "https://watermajibackend-production.up.railway.app"
 API_BASE_URL = "https://watermajibackend-production.up.railway.app/api"
 FRONTEND_URL = "https://watermajifrontend-production.up.railway.app"
