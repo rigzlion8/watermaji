@@ -19,6 +19,7 @@ interface StepProps {
   onBack: () => void;
   currentStep: number;
   totalSteps: number;
+  setSignupData: React.Dispatch<React.SetStateAction<SignupData>>;
 }
 
 const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalSteps }) => (
@@ -33,7 +34,10 @@ const Step1FirstName: React.FC<StepProps> = ({ data, onNext, currentStep, totalS
         type="text"
         placeholder="Enter your first name"
         value={data.firstName}
-        onChange={(e) => onNext('firstName', e.target.value)}
+        onChange={(e) => {
+          const newData = { ...data, firstName: e.target.value };
+          setSignupData(newData);
+        }}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
         onKeyDown={(e) => e.key === 'Enter' && data.firstName.trim() && onNext('firstName', data.firstName)}
@@ -66,7 +70,10 @@ const Step2LastName: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
         type="text"
         placeholder="Enter your last name"
         value={data.lastName}
-        onChange={(e) => onNext('lastName', e.target.value)}
+        onChange={(e) => {
+          const newData = { ...data, lastName: e.target.value };
+          setSignupData(newData);
+        }}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
         onKeyDown={(e) => e.key === 'Enter' && data.lastName.trim() && onNext('lastName', data.lastName)}
@@ -107,7 +114,10 @@ const Step3Email: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
         type="email"
         placeholder="Enter your email address"
         value={data.email}
-        onChange={(e) => onNext('email', e.target.value)}
+        onChange={(e) => {
+          const newData = { ...data, email: e.target.value };
+          setSignupData(newData);
+        }}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
         onKeyDown={(e) => e.key === 'Enter' && data.email.trim() && onNext('email', data.email)}
@@ -148,7 +158,10 @@ const Step4Phone: React.FC<StepProps> = ({ data, onNext, onBack, currentStep, to
         type="tel"
         placeholder="Enter your phone number"
         value={data.phone}
-        onChange={(e) => onNext('phone', e.target.value)}
+        onChange={(e) => {
+          const newData = { ...data, phone: e.target.value };
+          setSignupData(newData);
+        }}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
         onKeyDown={(e) => e.key === 'Enter' && data.phone.trim() && onNext('phone', data.phone)}
@@ -189,7 +202,10 @@ const Step5Password: React.FC<StepProps> = ({ data, onNext, onBack, currentStep,
         type="password"
         placeholder="Enter your password"
         value={data.password}
-        onChange={(e) => onNext('password', e.target.value)}
+        onChange={(e) => {
+          const newData = { ...data, password: e.target.value };
+          setSignupData(newData);
+        }}
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg"
         autoFocus
         onKeyDown={(e) => e.key === 'Enter' && data.password.trim() && onNext('password', data.password)}
@@ -328,17 +344,17 @@ const MultiStepSignupForm: React.FC = () => {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <Step1FirstName data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} />;
+        return <Step1FirstName data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} setSignupData={setSignupData} />;
       case 2:
-        return <Step2LastName data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} />;
+        return <Step2LastName data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} setSignupData={setSignupData} />;
       case 3:
-        return <Step3Email data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} />;
+        return <Step3Email data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} setSignupData={setSignupData} />;
       case 4:
-        return <Step4Phone data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} />;
+        return <Step4Phone data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} setSignupData={setSignupData} />;
       case 5:
-        return <Step5Password data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} />;
+        return <Step5Password data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} setSignupData={setSignupData} />;
       case 6:
-        return <Step6Review data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} />;
+        return <Step6Review data={signupData} onNext={handleNext} onBack={handleBack} currentStep={currentStep} totalSteps={totalSteps} setSignupData={setSignupData} />;
       default:
         return null;
     }
