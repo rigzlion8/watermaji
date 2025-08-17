@@ -57,7 +57,7 @@ services:
       - REDIS_PASSWORD=rJgjhjeuzobGsAadDFCxAhwFYTSQGvqQ
       - NEXT_PUBLIC_API_URL=https://watermajibackend-production.up.railway.app
       - API_BASE_URL=https://watermajibackend-production.up.railway.app/api
-      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003,http://localhost:3004,http://localhost:3005,http://frontend:3000,http://host.docker.internal:3000,https://watermajifrontend-production.up.railway.app
+      - CORS_ORIGINS=http://frontend:3000,http://host.docker.internal:3000,https://watermajifrontend-production.up.railway.app
       - JWT_SECRET=746971f560a53d639db8b3985b2bb295
       - JWT_ACCESS_TOKEN_EXPIRY=15m
       - JWT_REFRESH_TOKEN_EXPIRY=7d
@@ -84,6 +84,7 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=https://watermajibackend-production.up.railway.app
+      - API_BASE_URL=https://watermajibackend-production.up.railway.app/api
     depends_on:
       - backend
     networks:
