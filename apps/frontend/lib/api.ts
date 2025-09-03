@@ -3,7 +3,7 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
   ? (process.env.API_BASE_URL || 'https://watermajibackend-production.up.railway.app/api')
   : 'http://localhost:3001/api';
 
-// Debug logging
+// Debug logging for debug purposes
 console.log('🔍 Frontend API Configuration:');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
